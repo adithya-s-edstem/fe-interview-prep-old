@@ -15,7 +15,8 @@ A generic persisted-state hook over `localStorage`, storing versioned JSON valid
 - **`sessionStorage`:** survives refresh, but closing the tab loses the todos, which users would not expect.
 - **IndexedDB:** asynchronous, so the first render would need a loading state; overkill for small data.
 - **A state library with a persist plugin (Zustand `persist`):** works, but hides the logic Q1 asks us to write.
-- **`useSyncExternalStore` across tabs:** a later improvement; not required.
+- **`useSyncExternalStore` across tabs:** heavier than needed; listening for the `storage` event inside the hook
+  keeps open tabs in step without it.
 
 ## Consequences
 - Reads are synchronous, so the first render already shows saved data with no flash.
