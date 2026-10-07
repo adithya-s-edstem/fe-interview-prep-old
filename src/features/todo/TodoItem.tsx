@@ -39,7 +39,7 @@ export function TodoItem({ todo, actions }: { todo: Todo; actions: TodoItemActio
           }}
           className="size-4 shrink-0"
         />
-        <span className={todo.completed ? 'break-words text-slate-500 line-through' : 'break-words'}>
+        <span className={`min-w-0 wrap-anywhere ${todo.completed ? 'text-slate-500 line-through' : ''}`}>
           {todo.title}
         </span>
       </label>
