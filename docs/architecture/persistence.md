@@ -5,7 +5,8 @@ Reusable saving logic required by Q1 (`docs/requirements/todo-app.md#reusable-pe
 `docs/decisions/0009-localstorage-persistence.md`.
 
 ## Persisted state hook
-A generic hook with the same shape as `useState`, plus a storage key and a schema:
+A generic hook with the same shape as `useState`, plus a storage key and a schema. It also returns whether the
+latest value was saved:
 
 - Reads the stored value once on first render; the stored value is the initial state.
 - Writes the value back whenever it changes.
@@ -24,6 +25,8 @@ A generic hook with the same shape as `useState`, plus a storage key and a schem
 
 ## Storage failures
 If storage is unavailable or full (private mode, quota), the app keeps working in memory and does not crash.
+The hook reports the value as not saved, so callers can warn that changes will be lost on refresh; Q1 shows
+"Couldn't save. Changes will be lost when you leave or refresh the page." until a later save succeeds.
 
 ## Clearing
 Callers can clear their key, for example Q3 after a successful submit.

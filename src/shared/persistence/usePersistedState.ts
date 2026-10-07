@@ -7,12 +7,14 @@ import { writeStoredValue } from './writeStoredValue'
 export function usePersistedState<Value>(options: PersistedStateOptions<Value>) {
   const { key } = options
   const [value, setValue] = useState(() => readStoredValue(options))
+  const [isSaved, setIsSaved] = useState(true)
   const reloadStoredValue = useEffectEvent(() => {
     setValue(readStoredValue(options))
   })
 
   useEffect(() => {
-    writeStoredValue(key, value)
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsSaved(writeStoredValue(key, value))
   }, [key, value])
 
   useEffect(
@@ -23,5 +25,5 @@ export function usePersistedState<Value>(options: PersistedStateOptions<Value>) 
     [key],
   )
 
-  return [value, setValue] as const
+  return [value, setValue, isSaved] as const
 }

@@ -12,7 +12,7 @@ import { emptyTodoListState, todoListStateSchema } from './TodoListState'
 const TODO_LIST_KEY = persistedStateKey({ feature: 'todo', version: 1 })
 
 export function useTodoList() {
-  const [{ todos, filter }, setTodoList] = usePersistedState({
+  const [{ todos, filter }, setTodoList, isSaved] = usePersistedState({
     key: TODO_LIST_KEY,
     schema: todoListStateSchema,
     defaultValue: emptyTodoListState,
@@ -25,6 +25,7 @@ export function useTodoList() {
   return {
     todos,
     filter,
+    isSaved,
     chooseFilter: (chosenFilter: TodoFilter) => {
       setTodoList((previous) => ({ ...previous, filter: chosenFilter }))
     },

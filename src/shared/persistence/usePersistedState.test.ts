@@ -16,6 +16,16 @@ function currentCount(counter: ReturnType<typeof renderCounter>) {
   return counter.result.current[0].count
 }
 
+function isSaved(counter: ReturnType<typeof renderCounter>) {
+  return counter.result.current[2]
+}
+
+function refuseToSave() {
+  return vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+    throw new DOMException('Storage is full', 'QuotaExceededError')
+  })
+}
+
 function setCount(counter: ReturnType<typeof renderCounter>, count: number) {
   act(() => {
     counter.result.current[1]({ count })
@@ -130,13 +140,39 @@ describe('usePersistedState', () => {
   })
 
   it('keeps working in memory when storage refuses to save', () => {
-    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
-      throw new DOMException('Storage is full', 'QuotaExceededError')
-    })
+    refuseToSave()
     const counter = renderCounter()
 
     setCount(counter, 4)
 
     expect(currentCount(counter)).toBe(4)
+  })
+
+  it('reports the value as saved when storage accepts it', () => {
+    const counter = renderCounter()
+
+    setCount(counter, 4)
+
+    expect(isSaved(counter)).toBe(true)
+  })
+
+  it('reports the value as not saved when storage refuses to save', () => {
+    const counter = renderCounter()
+    refuseToSave()
+
+    setCount(counter, 4)
+
+    expect(isSaved(counter)).toBe(false)
+  })
+
+  it('reports the value as saved again once storage accepts a later save', () => {
+    const counter = renderCounter()
+    const storageRefusal = refuseToSave()
+    setCount(counter, 4)
+
+    storageRefusal.mockRestore()
+    setCount(counter, 5)
+
+    expect(isSaved(counter)).toBe(true)
   })
 })

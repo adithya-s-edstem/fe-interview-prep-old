@@ -16,6 +16,11 @@ export function TodoPage() {
 
   return (
     <section className="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-4">
+      {!todoList.isSaved && (
+        <p role="alert" className="rounded border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-amber-900">
+          Couldn&apos;t save. Changes will be lost when you leave or refresh the page.
+        </p>
+      )}
       <NewTodoForm onAdd={todoList.add} inputRef={newTodoInput} />
       <TodoFilterButtons chosenFilter={filter} onChoose={todoList.chooseFilter} />
       <TodoList

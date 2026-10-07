@@ -29,6 +29,8 @@ A todo app that survives a page refresh. Route: `/todo`. Branch: `feature/q1-tod
 ## Persistence
 - Todos and the selected filter survive a page refresh.
 - Missing or unreadable saved data starts the app with an empty list and the All filter instead of crashing.
+- If a change cannot be saved (storage full or blocked), it stays on screen and the page warns that it will be
+  lost on refresh.
 
 ## Reusable persistence
 The saving logic is a reusable piece that other features can use with their own data, not code specific to
