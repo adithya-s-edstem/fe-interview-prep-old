@@ -6,8 +6,10 @@ The backend for Q5 (`docs/requirements/auth-session.md#mock-backend-endpoints`),
 ## Setup
 - The same request handlers serve the browser (a service worker) and tests (Node server in Vitest).
 - Requests show up in the browser's Network tab, so the single refresh call can be seen there.
-- The worker starts before the app renders, in every build, because there is no real backend. Requests it has no
-  handler for go to the network unchanged; in tests they fail the test.
+- The worker starts before the app renders, in every build, because there is no real backend.
+- In the browser, an `/api/*` request with no handler answers `404` with a message naming the method and path, so a
+  mistyped address fails at once instead of returning the app's HTML. Other unhandled requests (assets) go to the
+  network unchanged. In tests, any unhandled request fails the test.
 - `GET /api/health` answers `200 {"status":"ok"}` so the wiring can be checked before any question adds handlers.
 
 ## Users
