@@ -20,6 +20,8 @@ For Q2 (`docs/requirements/live-search.md#debounced-requests`):
 - A debounced value hook delays the query until the user stops typing for about 300 ms.
 - Only the debounced value triggers a request.
 - The query is trimmed before the debounce; an empty query skips the debounce so results hide at once.
+- Clearing the box also forgets the debounced query, so a new word typed straight after is not answered with the old
+  word's results or a repeat request for it.
 
 ## Race safety
 For Q2 (`docs/requirements/live-search.md#latest-query-wins`):
