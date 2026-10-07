@@ -79,6 +79,34 @@ describe('todo page: managing todos', () => {
     expect(shownTodoTitles()).toEqual(['Buy milk'])
   })
 
+  it('explains why a blank title cannot be saved and keeps the editor open', async () => {
+    const { user } = renderTodoPage()
+    await addTodos(user, ['Buy milk'])
+
+    await user.click(screen.getByRole('button', { name: 'Edit Buy milk' }))
+    const titleInput = screen.getByRole('textbox', { name: 'New title for Buy milk' })
+    await user.clear(titleInput)
+    await user.type(titleInput, '\u200B{Enter}')
+
+    expect(titleInput).toBeInTheDocument()
+    expect(titleInput).toHaveAccessibleDescription("Title can't be empty")
+    expect(titleInput).toBeInvalid()
+  })
+
+  it('hides the blank title message once the title is changed', async () => {
+    const { user } = renderTodoPage()
+    await addTodos(user, ['Buy milk'])
+    await user.click(screen.getByRole('button', { name: 'Edit Buy milk' }))
+    const titleInput = screen.getByRole('textbox', { name: 'New title for Buy milk' })
+    await user.clear(titleInput)
+    await user.click(screen.getByRole('button', { name: 'Save' }))
+
+    await user.type(titleInput, 'B')
+
+    expect(screen.queryByText("Title can't be empty")).not.toBeInTheDocument()
+    expect(titleInput).toBeValid()
+  })
+
   it('keeps the old title when an edit is cancelled', async () => {
     const { user } = renderTodoPage()
     await addTodos(user, ['Buy milk'])

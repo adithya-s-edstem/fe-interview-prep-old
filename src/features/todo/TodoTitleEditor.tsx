@@ -13,13 +13,18 @@ export function TodoTitleEditor({
   onCancel: () => void
 }) {
   const [draft, setDraft] = useState(title)
+  const [titleError, setTitleError] = useState<string>()
   const inputId = useId()
+  const errorId = useId()
 
   function saveDraft(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (todoTitleSchema.safeParse(draft).success) {
+    const parsedTitle = todoTitleSchema.safeParse(draft)
+    if (parsedTitle.success) {
       onSave(draft)
+      return
     }
+    setTitleError(parsedTitle.error.issues[0]?.message)
   }
 
   function cancelOnEscape(event: KeyboardEvent<HTMLFormElement>) {
@@ -29,25 +34,35 @@ export function TodoTitleEditor({
   }
 
   return (
-    <form onSubmit={saveDraft} onKeyDown={cancelOnEscape} className="flex flex-1 gap-2">
-      <label htmlFor={inputId} className="sr-only">
-        {`New title for ${title}`}
-      </label>
-      <input
-        id={inputId}
-        value={draft}
-        onChange={(event) => {
-          setDraft(event.target.value)
-        }}
-        autoFocus
-        className={todoInputClassName}
-      />
-      <button type="submit" className={todoButtonClassName}>
-        Save
-      </button>
-      <button type="button" onClick={onCancel} className={todoButtonClassName}>
-        Cancel
-      </button>
+    <form onSubmit={saveDraft} onKeyDown={cancelOnEscape} className="flex min-w-0 flex-1 flex-col gap-1">
+      <div className="flex gap-2">
+        <label htmlFor={inputId} className="sr-only">
+          {`New title for ${title}`}
+        </label>
+        <input
+          id={inputId}
+          value={draft}
+          onChange={(event) => {
+            setDraft(event.target.value)
+            setTitleError(undefined)
+          }}
+          aria-invalid={titleError !== undefined}
+          aria-describedby={titleError === undefined ? undefined : errorId}
+          autoFocus
+          className={todoInputClassName}
+        />
+        <button type="submit" className={todoButtonClassName}>
+          Save
+        </button>
+        <button type="button" onClick={onCancel} className={todoButtonClassName}>
+          Cancel
+        </button>
+      </div>
+      {titleError !== undefined && (
+        <p id={errorId} role="alert" className="text-sm text-red-700">
+          {titleError}
+        </p>
+      )}
     </form>
   )
 }

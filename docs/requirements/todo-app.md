@@ -10,7 +10,9 @@ A todo app that survives a page refresh. Route: `/todo`. Branch: `feature/q1-tod
 
 ## Title validation
 - Empty or whitespace-only titles are ignored on add and on edit; no todo is created or changed.
-- Titles are trimmed before saving.
+- Invisible characters such as zero-width spaces count as whitespace.
+- Titles are trimmed of whitespace before saving; invisible characters inside a title are kept.
+- Saving a blank title in the editor keeps the editor open and shows "Title can't be empty" next to the box.
 
 ## Filters
 - The user can filter the list by All, Active or Completed.
