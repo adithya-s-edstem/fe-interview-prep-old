@@ -1,0 +1,19 @@
+name: limits
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check-limits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Line length and file size
+        env:
+          BASE_REF: origin/${{ github.base_ref }}
+        run: bash scripts/check-limits.sh "$BASE_REF"
