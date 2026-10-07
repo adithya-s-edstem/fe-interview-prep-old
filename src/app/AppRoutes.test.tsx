@@ -2,6 +2,8 @@ import { screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 import { renderAppAt } from '../test/renderAppAt'
+import { questionLabel } from './questionLabel'
+import { questions } from './questions'
 
 const questionPages = [
   { label: 'Q1 Todo App', path: '/todo' },
@@ -44,6 +46,12 @@ describe('app routes', () => {
       '/',
       ...questionPages.map((page) => page.path),
     ])
+  })
+
+  it.each(questions)('serves the page for $title at the path the question list gives it', (question) => {
+    renderAppAt(question.path)
+
+    expect(screen.getByRole('heading', { level: 1, name: questionLabel(question) })).toBeInTheDocument()
   })
 
   it('keeps every address under /auth on the login and session question', () => {

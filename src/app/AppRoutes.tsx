@@ -10,11 +10,11 @@ export function AppRoutes() {
     <Routes>
       <Route element={<AppLayout />}>
         <Route index element={<HomePage />} />
-        <Route path="todo" element={<QuestionPlaceholderPage question={todoQuestion} />} />
-        <Route path="search" element={<QuestionPlaceholderPage question={searchQuestion} />} />
-        <Route path="register" element={<QuestionPlaceholderPage question={registerQuestion} />} />
-        <Route path="table" element={<QuestionPlaceholderPage question={tableQuestion} />} />
-        <Route path="auth/*" element={<QuestionPlaceholderPage question={authQuestion} />} />
+        <Route path={todoQuestion.path} element={<QuestionPlaceholderPage question={todoQuestion} />} />
+        <Route path={searchQuestion.path} element={<QuestionPlaceholderPage question={searchQuestion} />} />
+        <Route path={registerQuestion.path} element={<QuestionPlaceholderPage question={registerQuestion} />} />
+        <Route path={tableQuestion.path} element={<QuestionPlaceholderPage question={tableQuestion} />} />
+        <Route path={`${authQuestion.path}/*`} element={<QuestionPlaceholderPage question={authQuestion} />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

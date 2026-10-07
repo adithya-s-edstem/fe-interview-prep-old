@@ -50,3 +50,6 @@ src/
 ## Layout
 A shared layout gives every page the same header with links to all questions, and a main content area. Each page
 handles its own loading, empty and error states.
+
+Routes take their paths from the question list in `src/app/questions.ts`, the same list the home page and header
+links use, so a link and its route cannot disagree.
