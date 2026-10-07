@@ -1,10 +1,18 @@
-import { useState } from 'react'
+import { useState, type Ref } from 'react'
 import type { Todo } from './Todo'
 import { todoButtonClassName } from './todoButtonClassName'
 import type { TodoItemActions } from './TodoItemActions'
 import { TodoTitleEditor } from './TodoTitleEditor'
 
-export function TodoItem({ todo, actions }: { todo: Todo; actions: TodoItemActions }) {
+export function TodoItem({
+  todo,
+  actions,
+  checkboxRef,
+}: {
+  todo: Todo
+  actions: TodoItemActions
+  checkboxRef: Ref<HTMLInputElement>
+}) {
   const [isEditing, setIsEditing] = useState(false)
   const [hasFinishedEditing, setHasFinishedEditing] = useState(false)
 
@@ -32,6 +40,7 @@ export function TodoItem({ todo, actions }: { todo: Todo; actions: TodoItemActio
     <li className="flex items-center gap-3 py-2">
       <label className="flex min-w-0 flex-1 items-center gap-3">
         <input
+          ref={checkboxRef}
           type="checkbox"
           checked={todo.completed}
           onChange={(event) => {

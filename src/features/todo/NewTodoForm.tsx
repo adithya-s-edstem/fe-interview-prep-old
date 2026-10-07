@@ -1,8 +1,14 @@
-import { useId, useState, type FormEvent } from 'react'
+import { useId, useState, type FormEvent, type Ref } from 'react'
 import { todoButtonClassName } from './todoButtonClassName'
 import { todoInputClassName } from './todoInputClassName'
 
-export function NewTodoForm({ onAdd }: { onAdd: (title: string) => void }) {
+export function NewTodoForm({
+  onAdd,
+  inputRef,
+}: {
+  onAdd: (title: string) => void
+  inputRef: Ref<HTMLInputElement>
+}) {
   const [title, setTitle] = useState('')
   const inputId = useId()
 
@@ -19,6 +25,7 @@ export function NewTodoForm({ onAdd }: { onAdd: (title: string) => void }) {
       </label>
       <div className="flex gap-2">
         <input
+          ref={inputRef}
           id={inputId}
           value={title}
           onChange={(event) => {

@@ -5,7 +5,8 @@ A todo app that survives a page refresh. Route: `/todo`. Branch: `feature/q1-tod
 ## Manage todos
 - The user can add a todo with a title.
 - The user can edit an existing todo's title.
-- The user can delete a todo.
+- The user can delete a todo. Focus then moves to the next todo shown, the one before it if the deleted todo
+  was last, or the new todo box if no todos are left in view.
 - The user can mark a todo complete and mark it active again.
 
 ## Title validation
