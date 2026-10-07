@@ -1,7 +1,9 @@
 import { screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
+import { saveFromAnotherTab } from '../../test/saveFromAnotherTab'
 import { addTodos } from './test/addTodos'
 import { filterButton } from './test/filterButton'
+import { savedTodos } from './test/savedTodos'
 import { shownItemsLeft } from './test/shownItemsLeft'
 import { renderTodoPage } from './test/renderTodoPage'
 import { shownTodoTitles } from './test/shownTodoTitles'
@@ -34,6 +36,18 @@ describe('todo page: surviving a refresh', () => {
     renderTodoPage()
 
     expect(screen.getByRole('checkbox', { name: 'Buy milk and bread' })).toBeChecked()
+  })
+
+  it('keeps a todo added in another tab when this tab saves', async () => {
+    const thisTab = renderTodoPage()
+    await addTodos(thisTab.user, ['Buy milk'])
+    const otherTabTodos = [...savedTodos(), { id: 'from-other-tab', title: 'Walk the dog', completed: false }]
+    saveFromAnotherTab(TODO_STORAGE_KEY, JSON.stringify({ todos: otherTabTodos, filter: 'all' }))
+
+    await addTodos(thisTab.user, ['Read a book'])
+
+    expect(shownTodoTitles()).toEqual(['Buy milk', 'Walk the dog', 'Read a book'])
+    expect(savedTodos().map((todo) => todo.title)).toEqual(['Buy milk', 'Walk the dog', 'Read a book'])
   })
 
   it.each([

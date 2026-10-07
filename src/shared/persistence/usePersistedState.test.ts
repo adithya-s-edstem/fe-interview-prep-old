@@ -1,6 +1,8 @@
 import { act, renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import { z } from 'zod'
+import { clearFromAnotherTab } from '../../test/clearFromAnotherTab'
+import { saveFromAnotherTab } from '../../test/saveFromAnotherTab'
 import { usePersistedState } from './usePersistedState'
 
 const COUNTER_KEY = 'fe-prep:counter:v1'
@@ -76,6 +78,53 @@ describe('usePersistedState', () => {
     })
 
     const counter = renderCounter()
+
+    expect(currentCount(counter)).toBe(0)
+  })
+
+  it('shows a value saved by another tab', () => {
+    const counter = renderCounter()
+
+    saveFromAnotherTab(COUNTER_KEY, JSON.stringify({ count: 7 }))
+
+    expect(currentCount(counter)).toBe(7)
+  })
+
+  it('builds on a value saved by another tab instead of overwriting it', () => {
+    const counter = renderCounter()
+    saveFromAnotherTab(COUNTER_KEY, JSON.stringify({ count: 7 }))
+
+    act(() => {
+      counter.result.current[1]((previous) => ({ count: previous.count + 1 }))
+    })
+
+    expect(currentCount(counter)).toBe(8)
+    expect(currentCount(renderCounter())).toBe(8)
+  })
+
+  it('ignores values another tab saves under a different key', () => {
+    const counter = renderCounter()
+    setCount(counter, 2)
+
+    saveFromAnotherTab('fe-prep:other:v1', JSON.stringify({ count: 7 }))
+
+    expect(currentCount(counter)).toBe(2)
+  })
+
+  it('falls back to the default value when another tab saves invalid data', () => {
+    const counter = renderCounter()
+    setCount(counter, 2)
+
+    saveFromAnotherTab(COUNTER_KEY, JSON.stringify({ count: 'seven' }))
+
+    expect(currentCount(counter)).toBe(0)
+  })
+
+  it('falls back to the default value when another tab clears storage', () => {
+    const counter = renderCounter()
+    setCount(counter, 2)
+
+    clearFromAnotherTab()
 
     expect(currentCount(counter)).toBe(0)
   })

@@ -9,6 +9,8 @@ A generic hook with the same shape as `useState`, plus a storage key and a schem
 
 - Reads the stored value once on first render; the stored value is the initial state.
 - Writes the value back whenever it changes.
+- Follows saves from other open tabs through the `storage` event, so a tab builds on the latest saved value
+  instead of overwriting it. Another tab clearing storage resets the value to the caller's default.
 - Typed by the schema, so callers get a correctly typed value without casts.
 
 ## Storage keys
