@@ -33,6 +33,7 @@ For Q2 (`docs/requirements/live-search.md#latest-query-wins`):
 
 ## Retry
 The error state's Retry action re-runs the request for the current query without waiting for the debounce.
+Focus moves to the search box, because the Retry button disappears once the request restarts.
 
 ## Authenticated requests
 Q5 requests go through an authenticated variant of the wrapper that adds the access token and handles expiry.

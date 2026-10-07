@@ -101,4 +101,14 @@ describe('search page: result states', () => {
     expect(api.searchedQueries).toEqual(['red', 'red'])
     expect(screen.queryByRole('alert')).not.toBeInTheDocument()
   })
+
+  it('moves focus to the search box when Retry is pressed, since the button goes away', async () => {
+    mockProductSearch(() => HttpResponse.json({ message: 'Server error' }, { status: 500 }))
+    const { user } = renderSearchPage()
+    await searchFor(user, 'red')
+
+    await user.click(await screen.findByRole('button', { name: 'Retry' }))
+
+    expect(screen.getByRole('searchbox', { name: 'Search products' })).toHaveFocus()
+  })
 })

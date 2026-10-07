@@ -1,6 +1,14 @@
-import { useId } from 'react'
+import { useId, type Ref } from 'react'
 
-export function SearchBox({ text, onChange }: { text: string; onChange: (text: string) => void }) {
+export function SearchBox({
+  text,
+  onChange,
+  inputRef,
+}: {
+  text: string
+  onChange: (text: string) => void
+  inputRef: Ref<HTMLInputElement>
+}) {
   const inputId = useId()
 
   return (
@@ -9,6 +17,7 @@ export function SearchBox({ text, onChange }: { text: string; onChange: (text: s
         Search products
       </label>
       <input
+        ref={inputRef}
         id={inputId}
         type="search"
         value={text}
