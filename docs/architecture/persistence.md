@@ -14,6 +14,7 @@ A generic hook with the same shape as `useState`, plus a storage key and a schem
 ## Storage keys
 - Every key is namespaced by feature and version, for example `fe-prep:todo:v1`.
 - Bumping the version abandons old data instead of migrating it.
+- Q1 saves its todos and selected filter together under `fe-prep:todo:v1`.
 
 ## Validation of stored data
 - Stored JSON is parsed and validated with a Zod schema before use.
