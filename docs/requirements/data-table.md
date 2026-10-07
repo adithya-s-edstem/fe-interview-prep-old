@@ -8,7 +8,9 @@ A reusable table component used to browse a large dataset. Route: `/table`. Bran
   writing table markup per dataset.
 
 ## Dataset
-- Shows 500+ rows, for example from `https://dummyjson.com/users?limit=0`.
+- Shows 500+ rows fetched from a public API, in the same order on every load.
+- The brief's example, `https://dummyjson.com/users?limit=0`, returns only 208 rows, so we fetch 600 seeded users
+  from randomuser.me instead. See `docs/decisions/0012-table-dataset.md`.
 - Loading and error states are shown while the dataset is fetched or if fetching fails.
 
 ## Sorting cycle

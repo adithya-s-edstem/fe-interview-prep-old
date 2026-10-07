@@ -25,8 +25,8 @@ The pipeline result is derived with memoisation from the rows and the view state
 ## Component split
 - The table component renders headers, rows, sort indicators and empty states from its inputs and emits events
   (sort, filter, search, page, page size). It does not fetch data or read the URL.
-- The Q4 page fetches users, reads and writes the view through [url-state.md](url-state.md), runs the pipeline
-  and passes the result to the table.
+- The Q4 page fetches 600 seeded users (`docs/decisions/0012-table-dataset.md`), reads and writes the view
+  through [url-state.md](url-state.md), runs the pipeline and passes the result to the table.
 
 ## Accessibility
 - Sortable headers are buttons and expose `aria-sort`.

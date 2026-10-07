@@ -11,7 +11,8 @@ Step 2 collects country, city and postal code. All three are required, subject t
 
 ## Postal code rule
 - When the country is India, the postal code must be exactly 6 digits.
-- For any other country, any non-empty postal code is accepted.
+- For any other country, any non-empty postal code is accepted. The brief says "any postal code"; requiring it
+  to be non-empty is our choice, so that every address field is required.
 - Changing the country re-validates the postal code.
 
 ## Preferences step

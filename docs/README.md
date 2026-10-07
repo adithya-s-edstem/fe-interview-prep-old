@@ -67,3 +67,4 @@ as anchorable requirements and add our design; where they disagree with the PDF,
 | [0009](decisions/0009-localstorage-persistence.md) | localStorage for persisted state |
 | [0010](decisions/0010-url-as-table-state.md) | URL as the table's view state |
 | [0011](decisions/0011-one-ticket-per-question.md) | One ticket per question |
+| [0012](decisions/0012-table-dataset.md) | Seeded randomuser.me users as the table dataset |

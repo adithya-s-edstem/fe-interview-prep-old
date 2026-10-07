@@ -38,6 +38,9 @@ No UI or table library may do the core work of a question. Libraries are fine fo
 See `docs/decisions/0007-hand-written-core-mechanics.md`.
 
 ## AI usage policy
+Claude Code is expected: use it to write the code fast, and spend the time saved understanding what it wrote.
+Be ready to explain every decision and the alternatives considered, and to make a short live change.
+
 AI tools are allowed; not understanding the submitted code is not. The interviewer opens the PRs and asks
 questions such as:
 - Why does this component re-render? Could you prevent it?
