@@ -8,7 +8,6 @@ import { productsFound } from './test/productsFound'
 import { renderSearchPage } from './test/renderSearchPage'
 import { searchFor } from './test/searchFor'
 import { shownResultTitles } from './test/shownResultTitles'
-import { typeQuery } from './test/typeQuery'
 
 describe('search page: the latest query wins', () => {
   it('keeps the newer results on screen when an older response arrives late', async () => {
@@ -44,7 +43,7 @@ describe('search page: the latest query wins', () => {
     await searchFor(user, 'red')
 
     await user.clear(screen.getByRole('searchbox', { name: 'Search products' }))
-    await typeQuery(user, 'red')
+    await searchFor(user, 'red')
 
     await expectNeverAppears(() => screen.getByRole('alert'))
     expect(screen.getByRole('status')).toHaveTextContent("Searching for 'red'…")

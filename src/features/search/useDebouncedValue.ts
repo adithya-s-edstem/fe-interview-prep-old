@@ -12,5 +12,5 @@ export function useDebouncedValue<Value>(value: Value, delayMilliseconds: number
     }
   }, [value, delayMilliseconds])
 
-  return debouncedValue
+  return [debouncedValue, setDebouncedValue] as const
 }

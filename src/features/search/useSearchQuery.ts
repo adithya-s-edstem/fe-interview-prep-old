@@ -3,6 +3,9 @@ import { useDebouncedValue } from './useDebouncedValue'
 
 export function useSearchQuery(typedText: string) {
   const typedQuery = typedText.trim()
-  const debouncedQuery = useDebouncedValue(typedQuery, SEARCH_DEBOUNCE_MILLISECONDS)
+  const [debouncedQuery, settleDebouncedQuery] = useDebouncedValue(typedQuery, SEARCH_DEBOUNCE_MILLISECONDS)
+  if (typedQuery === '' && debouncedQuery !== '') {
+    settleDebouncedQuery('')
+  }
   return typedQuery === '' ? '' : debouncedQuery
 }

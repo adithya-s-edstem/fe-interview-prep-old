@@ -75,4 +75,27 @@ describe('search page: sending requests', () => {
     expect(shownResultTitles()).toEqual([])
     expect(api.searchedQueries).toEqual(['red'])
   })
+
+  it('keeps the old results hidden when the box is cleared and a new word is typed before the pause', async () => {
+    mockProductSearch(() => productsFound([aProduct({ title: 'Phone case' })]))
+    const { user } = renderSearchPage()
+    await searchFor(user, 'phone')
+    await screen.findByRole('heading', { level: 2, name: 'Phone case' })
+
+    await user.clear(screen.getByRole('searchbox', { name: 'Search products' }))
+    await typeQuery(user, 'la')
+
+    expect(shownResultTitles()).toEqual([])
+  })
+
+  it('searches only the new word when the box is cleared and a new word is typed before the pause', async () => {
+    const api = mockProductSearch(() => productsFound([]))
+    const { user } = renderSearchPage()
+    await searchFor(user, 'phone')
+
+    await user.clear(screen.getByRole('searchbox', { name: 'Search products' }))
+    await searchFor(user, 'la')
+
+    expect(api.searchedQueries).toEqual(['phone', 'la'])
+  })
 })
