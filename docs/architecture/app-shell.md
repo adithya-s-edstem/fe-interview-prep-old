@@ -5,6 +5,8 @@ How the single app is structured so five independent features can live side by s
 ## Runtime
 A client-side single-page app built with Vite, React and TypeScript in strict mode
 (`docs/decisions/0001-vite-react-typescript-strict.md`), styled with Tailwind (`docs/decisions/0004-tailwind-css.md`).
+It runs in Baseline 2025 browsers: Chrome and Edge 136+, Firefox 134+, Safari 18.2+
+(`docs/decisions/0015-supported-browsers.md`).
 
 ## Routes
 Routing uses React Router (`docs/decisions/0002-react-router.md`). Each question owns one route subtree:
