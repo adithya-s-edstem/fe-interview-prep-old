@@ -54,6 +54,24 @@ describe('app routes', () => {
     expect(screen.getByRole('heading', { level: 1, name: questionLabel(question) })).toBeInTheDocument()
   })
 
+  it.each(questionPages)('names the browser tab after the $label page', ({ label, path }) => {
+    renderAppAt(path)
+
+    expect(document.title).toBe(`${label} · Frontend interview prep`)
+  })
+
+  it('names the browser tab after the app on the home page', () => {
+    renderAppAt('/')
+
+    expect(document.title).toBe('Frontend interview prep')
+  })
+
+  it('names the browser tab after the not-found page', () => {
+    renderAppAt('/no-such-page')
+
+    expect(document.title).toBe('Page not found · Frontend interview prep')
+  })
+
   it('keeps every address under /auth on the login and session question', () => {
     renderAppAt('/auth/login')
 

@@ -1,11 +1,13 @@
 import { Link } from 'react-router'
+import { APP_NAME } from './appName'
 import { questionLabel } from './questionLabel'
 import { questions } from './questions'
 
 export function HomePage() {
   return (
     <>
-      <h1 className="mb-6 text-2xl font-bold">Frontend interview prep</h1>
+      <title>{APP_NAME}</title>
+      <h1 className="mb-6 text-2xl font-bold">{APP_NAME}</h1>
       <ul className="grid gap-3 sm:grid-cols-2">
         {questions.map((question) => (
           <li key={question.path}>
