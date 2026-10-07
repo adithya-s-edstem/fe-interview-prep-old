@@ -4,9 +4,14 @@ Tools: Vitest, React Testing Library, user-event and MSW (`docs/decisions/0005-v
 
 ## Approach
 - Tests drive the UI the way a user does (roles, labels, typing, clicking) and assert what the user sees.
-- Network calls are intercepted with the same MSW handlers the app uses in development.
+- Network calls are intercepted with the same MSW handlers the app uses in development. Public APIs the browser
+  calls directly (Q2 product search) are answered by handlers each test sets up.
 - Pure logic (the table pipeline, the postal code rule, URL parsing) is also tested directly.
-- Fake timers are used for debounce and token expiry instead of real waiting.
+- Fake timers are used for debounce and token expiry instead of real waiting. Only `setTimeout` and
+  `clearTimeout` are faked. Testing Library only detects Jest's fake timers, so the test setup gives it a `jest`
+  global that advances Vitest's; without it, every user-event call waits forever.
+- Invariants over wide input ranges use property-based tests with fast-check
+  (`docs/decisions/0014-property-based-tests.md`).
 
 ## Required proofs
 Each question has at least one test, and the key acceptance criterion has a test that proves it:

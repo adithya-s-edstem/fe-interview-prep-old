@@ -4,10 +4,14 @@ A search box that shows results from a public API as the user types. Route: `/se
 
 ## Data source
 - A public API, for example `https://dummyjson.com/products/search?q=` or GitHub user search.
+- Chosen: DummyJSON product search, showing each product's title and description
+  (`docs/decisions/0013-product-search-api.md`).
 
 ## Debounced requests
 - No request is sent on every keystroke; a request is sent only once the user briefly stops typing.
 - An empty or whitespace-only query sends no request and shows no results.
+- Clearing the box hides the results at once, without waiting for the pause.
+- The query is sent without its surrounding spaces.
 
 ## Latest query wins
 - The results on screen always match the latest query, even when an earlier response arrives late.

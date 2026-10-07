@@ -68,3 +68,5 @@ as anchorable requirements and add our design; where they disagree with the PDF,
 | [0010](decisions/0010-url-as-table-state.md) | URL as the table's view state |
 | [0011](decisions/0011-one-ticket-per-question.md) | One ticket per question |
 | [0012](decisions/0012-table-dataset.md) | Seeded randomuser.me users as the table dataset |
+| [0013](decisions/0013-product-search-api.md) | DummyJSON product search as the Q2 API |
+| [0014](decisions/0014-property-based-tests.md) | Property-based tests with fast-check |
