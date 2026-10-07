@@ -1,16 +1,16 @@
-## Summary
-What this PR changes, in plain language.
+## Problem
+What this PR solves (1–2 lines).
 
 Closes #
 
-## How to verify
-Exact commands or steps a reviewer runs to see it working.
+## Approach
+How the components and state are organised.
 
-1.
+## Decisions & trade-offs
+What you chose, and why over the alternatives.
 
-## Docs updated
-- [ ] Not needed
-- [ ] `docs/...`
+## Screenshots
+UI before/after or a GIF.
 
-## Libraries added
-Name, why it was chosen, or why existing options did not fit. Write "None" if none.
+## How to test
+Page to open, steps, test files.
