@@ -32,6 +32,7 @@ src/
     auth/         Q5
   shared/         code used by more than one feature
   mocks/          MSW handlers and browser/server setup
+  test/           test setup and render helpers
 ```
 - A feature imports from `shared/` but never from another feature.
 - Code moves to `shared/` only once a second feature needs it, except where a requirement asks for reuse
@@ -49,3 +50,9 @@ src/
 ## Layout
 A shared layout gives every page the same header with links to all questions, and a main content area. Each page
 handles its own loading, empty and error states.
+
+Each page sets the browser tab title to its own name followed by the app name (`Q1 Todo App · Frontend interview
+prep`), so history entries and screen readers can tell pages apart. The home page uses the app name alone.
+
+Routes take their paths from the question list in `src/app/questions.ts`, the same list the home page and header
+links use, so a link and its route cannot disagree.

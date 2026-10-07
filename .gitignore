@@ -1,3 +1,9 @@
 .claude/
 CLAUDE.md
 *:Zone.Identifier
+node_modules
+dist
+coverage
+*.local
+*.log
+.DS_Store
