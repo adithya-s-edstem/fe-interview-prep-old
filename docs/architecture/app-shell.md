@@ -32,6 +32,7 @@ src/
     auth/         Q5
   shared/         code used by more than one feature
   mocks/          MSW handlers and browser/server setup
+  test/           test setup and render helpers
 ```
 - A feature imports from `shared/` but never from another feature.
 - Code moves to `shared/` only once a second feature needs it, except where a requirement asks for reuse

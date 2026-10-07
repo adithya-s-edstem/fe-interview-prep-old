@@ -4,8 +4,11 @@ The backend for Q5 (`docs/requirements/auth-session.md#mock-backend-endpoints`),
 (`docs/decisions/0006-msw-mock-backend.md`).
 
 ## Setup
-- The same request handlers serve the browser (service worker in development) and tests (Node server in Vitest).
+- The same request handlers serve the browser (a service worker) and tests (Node server in Vitest).
 - Requests show up in the browser's Network tab, so the single refresh call can be seen there.
+- The worker starts before the app renders, in every build, because there is no real backend. Requests it has no
+  handler for go to the network unchanged; in tests they fail the test.
+- `GET /api/health` answers `200 {"status":"ok"}` so the wiring can be checked before any question adds handlers.
 
 ## Users
 Two seeded users: one with the `user` role and one with the `admin` role. Their credentials are listed on the
