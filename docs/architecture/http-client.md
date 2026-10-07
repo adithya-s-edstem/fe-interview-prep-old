@@ -32,6 +32,8 @@ For Q2 (`docs/requirements/live-search.md#latest-query-wins`):
   mid-request and retyping the same query would briefly show the cancelled request's abort as an error.
 - Each settled result records the query and retry attempt it answers. What the page shows is derived from it:
   a result for any other query or attempt means the current one is still loading.
+- A settled result is forgotten as soon as its request is replaced or cancelled. Without this, searching a query
+  again after clearing the box would show its old error or results until the new request answered.
 
 ## Retry
 The error state's Retry action re-runs the request for the current query without waiting for the debounce.
