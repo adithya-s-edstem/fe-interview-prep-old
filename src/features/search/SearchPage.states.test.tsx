@@ -102,6 +102,34 @@ describe('search page: result states', () => {
     expect(screen.queryByRole('alert')).not.toBeInTheDocument()
   })
 
+  it('shows loading rather than the old error when a failed query is cleared and searched again', async () => {
+    const answers = [HttpResponse.json({ message: 'Server error' }, { status: 500 }), heldResponse().response]
+    mockProductSearch(() => answers.shift() ?? productsFound([]))
+    const { user } = renderSearchPage()
+    await searchFor(user, 'red')
+    await screen.findByRole('alert')
+
+    await user.clear(screen.getByRole('searchbox', { name: 'Search products' }))
+    await searchFor(user, 'red')
+
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+    expect(screen.getByRole('status')).toHaveTextContent("Searching for 'red'…")
+  })
+
+  it('shows loading rather than the old results when a query is cleared and searched again', async () => {
+    const answers = [productsFound([aProduct({ title: 'Red Lipstick' })]), heldResponse().response]
+    mockProductSearch(() => answers.shift() ?? productsFound([]))
+    const { user } = renderSearchPage()
+    await searchFor(user, 'red')
+    await screen.findByRole('heading', { level: 2, name: 'Red Lipstick' })
+
+    await user.clear(screen.getByRole('searchbox', { name: 'Search products' }))
+    await searchFor(user, 'red')
+
+    expect(shownResultTitles()).toEqual([])
+    expect(screen.getByRole('status')).toHaveTextContent("Searching for 'red'…")
+  })
+
   it('moves focus to the search box when Retry is pressed, since the button goes away', async () => {
     mockProductSearch(() => HttpResponse.json({ message: 'Server error' }, { status: 500 }))
     const { user } = renderSearchPage()

@@ -27,6 +27,7 @@ export function useProductSearch(query: string) {
     )
     return () => {
       controller.abort()
+      setFinished(undefined)
     }
   }, [query, attempt])
 
